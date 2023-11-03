@@ -6,8 +6,8 @@ public class Spell {
     protected static String[] spellTargetsArray = {
 //            Defines valid targets to be assigned in spell parameters for spells which are not AoE spells.
 //            Caster will only affect the caster of the spell, single target will affect any OTHER creature not
-//            including the caster, and Any will randomize any creature, including possibly the caster.
-            "Caster", "Single Target", "Any"
+//            including the caster, and Multiple will randomize any creature, including possibly the caster.
+            "Caster", "Single Target", "Multiple"
     };
 
     protected static String[] spellDescriptionsArray = {
@@ -56,6 +56,10 @@ public class Spell {
             ""
     };
 
+    protected static int[] maxTurns = {
+            1, 6, 6, 6, 0, 1, 1, 999, 4, 6, 6, 1
+    };
+
     protected static boolean[] isAreaSpell = {
 /*          Array holds a boolean value corresponding to the same spell at the index within spellArrayIndex.  If true,
             this indicates an area effect spell which cannot be assigned a random target value from the spellTargets
@@ -94,18 +98,43 @@ public class Spell {
 /*      First, take the spellArrayIndex and use it to check the areaSpells array and singleTargetSpells array.  This
 *           filters out spells which cannot have multiple targets.
 * */
-        if (isAreaSpell[spellArrayIndex]) {
+        if (isAreaSpell[spellArrayIndex - 1]) {
             this.range = "Area";
+            this.target = "All creatures within spell area";
         }
 
         else {
 //            define a random assignment of target(s) from the spellTargets array
+            Random rand = new Random();
+            int randIndex = rand.nextInt(spellTargetsArray.length);
+
+//            Assign target accordingly
+            if (spellTargetsArray[randIndex] == "Multiple") {
+                int randomRoll = rand.nextInt(2, 8);
+                this.target = "Multiple (up to "+randomRoll+")";
+            }
+            this.target = spellTargetsArray[randIndex];
+            this.range = "Affected creature(s)";
+
         }
-
-//        See whether that item contains certain substrings
-//        Use those substrings to inform items like target and duration, as well as # creatures affected
-
-
+//        Assign duration, with the notable edge cases
+        if (maxTurns[spellArrayIndex - 1] == 0) {
+            this.duration = "N/A";
+        }
+        else if (maxTurns[spellArrayIndex - 1] == 999) {
+            this.duration = "24 hours";
+        }
+        else {
+//            generate a random value between 1 and the stated maxTurns for that spell
+            Random rand = new Random();
+            int chosenRoll = rand.nextInt(1, 4);
+            if (chosenRoll == 1) {
+                this.duration = chosenRoll+" turn";
+            }
+            else {
+                this.duration = chosenRoll+" turns";
+            }
+        }
     }
 
     public static void main(String[] args) {
