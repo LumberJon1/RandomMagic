@@ -2,6 +2,14 @@ import java.util.Random;
 public class Spell {
 
     //    Accessible static lists
+
+    protected static String[] spellTargetsArray = {
+//            Defines valid targets to be assigned in spell parameters for spells which are not AoE spells.
+//            Caster will only affect the caster of the spell, single target will affect any OTHER creature not
+//            including the caster, and Any will randomize any creature, including possibly the caster.
+            "Caster", "Single Target", "Any"
+    };
+
     protected static String[] spellDescriptionsArray = {
             "A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature within range to " +
                     "succeed on a CON save DC 13 or spend the turn vomiting.",
@@ -39,13 +47,27 @@ public class Spell {
 
             "The affected creature gains resistance to physical attacks for 1d6 turns",
 
-            "The affected creature gains resistance to all magical attacks for 1d6 turns"
+            "The affected creature gains resistance to all magical attacks for 1d6 turns",
+
+            "The affected creature is surrounded by glowing red geometrical patterns and symbols, guiding any attacks" +
+                    "made against it for the next round.  All attacks against the marked creature during that round" +
+                    "are made with advantage.",
+
+            ""
+    };
+
+    protected static boolean[] isAreaSpell = {
+/*          Array holds a boolean value corresponding to the same spell at the index within spellArrayIndex.  If true,
+            this indicates an area effect spell which cannot be assigned a random target value from the spellTargets
+            array.  If false, this can be assigned any valid target within the assignSpellParameters method.
+*/
+            true, false, false, false, false, false, false, true, true, true, false, false, false
     };
 
     //    Instance variables
     private String target;
     private String duration;
-    private int range;
+    private String range;
 
     //    Constructor
     public Spell() {
@@ -69,7 +91,17 @@ public class Spell {
     }
 
     public void assignSpellParameters(int spellArrayIndex) {
-//        Check the entry within the spell array at index spellArrayIndex
+/*      First, take the spellArrayIndex and use it to check the areaSpells array and singleTargetSpells array.  This
+*           filters out spells which cannot have multiple targets.
+* */
+        if (isAreaSpell[spellArrayIndex]) {
+            this.range = "Area";
+        }
+
+        else {
+//            define a random assignment of target(s) from the spellTargets array
+        }
+
 //        See whether that item contains certain substrings
 //        Use those substrings to inform items like target and duration, as well as # creatures affected
 
