@@ -1,5 +1,100 @@
+import java.util.HashMap;
 import java.util.Random;
 public class Spell {
+
+
+    //    Instance variables
+    private String description;
+    private String target;
+    private String duration;
+    private String range;
+    private int maxTurns;
+    private boolean isAreaSpell;
+
+    //    No-args Constructor
+    public Spell() {
+//        Assigns a random index to use for spell parameters within the description array
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(spellDescriptionsArray.length);
+        this.assignSpellParameters(randomIndex);
+
+//        Describe the spell with the description for that index
+        this.describe(randomIndex);
+    }
+
+//    Parameter constructor
+    public Spell(String description, int maxTurns, boolean isAreaSpell) {
+//        Used when generating static ArrayList
+    }
+
+//    Hashmap for descriptions to map to maxDuration and isAreaSpell.
+    static {
+        HashMap<String, Integer[]> descriptionsToValues = new HashMap<>();
+//      Within the hashmap, the first value array index is the maxTurns.  The second index is the boolean value (0 or 1).
+//      Where 0 is not an area spell, and 1 is an area spell.
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+
+        descriptionsToValues.put("The affected creature grows bat wings that gives them 20' flying movement" +
+                        "\nfor 1d6 turns",
+                new Integer[]{6, 0});
+
+        descriptionsToValues.put("The affected creature grows to 20' tall & has a STR of 25 for 1d6 turns",
+                new Integer[]{6, 0});
+
+        descriptionsToValues.put("""
+                        The affected creature shrinks to 6 inches tall and has its move reduced to 5' for
+                        1d6 turns.  During the spell's duration, the creature has an AC of 19 and a STR of 2,
+                        and cannot be heard unless the creature trying to understand it gets within
+                        1 foot of the affected creature.""",
+                new Integer[]{1, 1});
+
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+        descriptionsToValues.put("A 30' x 30' x 30' cube of noxious gas emanates from the item, causing every creature"+
+                        "\n within range to succeed on a CON save DC 13 or spend the turn vomiting.",
+                new Integer[]{1, 1});
+
+}
+
 
     //    Accessible static lists
 
@@ -145,22 +240,7 @@ public class Spell {
             false,  // index 17
     };
 
-    //    Instance variables
-    private String target;
-    private String duration;
-    private String range;
-
-    //    Constructor
-    public Spell() {
-//        Assigns a random index to use for spell parameters within the description array
-        Random rand = new Random();
-        int randomIndex = rand.nextInt(spellDescriptionsArray.length);
-        this.assignSpellParameters(randomIndex);
-
-//        Describe the spell with the description for that index
-        this.describe(randomIndex);
-    }
-
+//    Methods...
 
     //    describe method
     public String describe(int spellArrayIndex) {
